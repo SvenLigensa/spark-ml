@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.VectorAssembler","timestamp":1736534722036,"sparkVersion":"3.5.3","uid":"VectorAssembler_224404a6024d","paramMap":{"outputCol":"minmax_features","inputCols":["Month","DayofMonth","DepTimeT","CRSDepTimeT","CRSArrTimeT"]},"defaultParamMap":{"outputCol":"VectorAssembler_224404a6024d__output","handleInvalid":"error"}}

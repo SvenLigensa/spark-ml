@@ -1,5 +1,4 @@
 import os
-import logging
 from pyspark import SparkConf, SparkContext
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
@@ -8,14 +7,6 @@ from pyspark.ml import Pipeline, PipelineModel
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml.evaluation import RegressionEvaluator
-
-# Initialize logging
-#logging.basicConfig(
-#    level=logging.DEBUG,
-#    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#    handlers=[logging.FileHandler("app.log")]
-#)
-#logger = logging.getLogger("Spark Application")
 
 # Initialize Spark
 conf = SparkConf()
@@ -168,14 +159,14 @@ def testing():
         print(f"MAE: {mae:.4f}")
         print(f"R²: {r2:.4f}")
 
-        if rmse < lowest_rmse:
+        if rmse <= lowest_rmse:
             lowest_rmse = rmse
             best_model = loaded_model
             best_model_path = available_model_path
 
     print(f"Predicting with model: {best_model_path}")
     predictions = best_model.transform(test_data)
-    predictions.drop("features").write.option("header", True).csv("predictions")
+    predictions.select("Month", "DayofMonth", "CRSElapsedTime", "DepDelay", "DepTimeT", "CRSDepTimeT", "CRSArrTimeT", "label", "prediction").write.mode('overwrite').option("header", True).csv("predictions")
 
 
 # Setup
